@@ -24,10 +24,10 @@ const router = createRouter({
   history: hashHistory,
   // When using Hash History, the basepath should usually be "/"
   // because the sub-path /hw6-ajmoats/ is handled by the browser/Vite
-  basepath: "/", // short again
+  basepath: "", // short again, otherwise doubles url-try empty
   context: { api },
 });
-
+ 
 // 4. Register the router for type safety
 declare module "@tanstack/react-router" {
   interface Register {

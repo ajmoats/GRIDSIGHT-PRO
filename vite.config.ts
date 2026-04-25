@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
-  base: "/hw6-ajmoats/", // yes trailing slash
+  base: "/hw6-ajmoats", // no trailing slash
   plugins: [
     // Use the lowercase version here as well
     tanstackRouter({

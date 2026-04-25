@@ -8,8 +8,13 @@
  * @module
  */
 
+import type * as assets from "../assets.js";
+import type * as auth from "../auth.js";
+import type * as events from "../events.js";
 import type * as hello from "../hello.js";
+import type * as market from "../market.js";
 import type * as seed from "../seed.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -18,8 +23,13 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  assets: typeof assets;
+  auth: typeof auth;
+  events: typeof events;
   hello: typeof hello;
+  market: typeof market;
   seed: typeof seed;
+  users: typeof users;
 }>;
 
 /**

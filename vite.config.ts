@@ -2,12 +2,20 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+// Note the lowercase 'tanstackRouter' here
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
-// https://vite.dev/config/
 export default defineConfig({
   base: "/hw6-ajmoats/",
-  plugins: [tanstackRouter(), react(), tailwindcss()],
+  plugins: [
+    // Use the lowercase version here as well
+    tanstackRouter({
+      routesDirectory: "./src/routes",
+      generatedRouteTree: "./src/routeTree.gen.ts",
+    }), 
+    react(), 
+    tailwindcss()
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

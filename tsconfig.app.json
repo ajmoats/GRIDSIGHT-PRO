@@ -25,9 +25,10 @@
     "noUncheckedSideEffectImports": true,
 
     /* Path alias */
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "convex"]
 }

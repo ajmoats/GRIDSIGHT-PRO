@@ -24,7 +24,7 @@ const router = createRouter({
   history: hashHistory,
   // When using Hash History, the basepath should usually be "/"
   // because the sub-path /hw6-ajmoats/ is handled by the browser/Vite
-  basepath: "/", // short again
+  basepath: "/hw6-ajmoats", // short again
   context: { api },
 });
 

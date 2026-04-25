@@ -6,7 +6,7 @@ export function LoginButton() {
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   if (isLoading) return <button disabled className="opacity-50">Loading...</button>;
-
+ 
   if (isAuthenticated) {
     return (
       <button 

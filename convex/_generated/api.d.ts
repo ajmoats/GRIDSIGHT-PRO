@@ -12,6 +12,7 @@ import type * as assets from "../assets.js";
 import type * as auth from "../auth.js";
 import type * as events from "../events.js";
 import type * as hello from "../hello.js";
+import type * as http from "../http.js";
 import type * as market from "../market.js";
 import type * as seed from "../seed.js";
 import type * as users from "../users.js";
@@ -27,6 +28,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   events: typeof events;
   hello: typeof hello;
+  http: typeof http;
   market: typeof market;
   seed: typeof seed;
   users: typeof users;

@@ -39,7 +39,7 @@ export const Route = createRootRoute({
           <p className="text-slate-500 font-medium">The requested infrastructure node does not exist in the grid map.</p>
         </div>
         <Link 
-          to="/" 
+          to={"/" as any}
           className="px-6 py-2 bg-blue-600 text-white rounded-xl font-bold no-underline hover:bg-blue-700 transition-all"
         >
           Return to Dashboard
@@ -69,7 +69,7 @@ function RootLayout() {
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-2 text-current no-underline group">
+            <Link to={"/" as any} className="flex items-center gap-2 text-current no-underline group">
               <span className="text-xl font-black tracking-tighter uppercase italic group-hover:text-blue-600 transition-colors">
                 GridSight <span className="text-blue-600">Pro</span>
               </span>

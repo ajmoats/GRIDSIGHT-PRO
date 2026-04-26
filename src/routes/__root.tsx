@@ -84,13 +84,13 @@ function RootLayout() {
             {isAuthenticated && (
               <nav className="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-widest">
                 <Link 
-                  to="/assets" 
+                  to={"/assets" as any}
                   className="text-slate-400 hover:text-slate-900 transition-all no-underline [&.active]:text-blue-600 [&.active]:border-b-2 [&.active]:border-blue-600 pb-1"
                 >
                   Assets
                 </Link>
                 <Link 
-                  to="/market" 
+                  to={"/market" as any}
                   className="text-slate-400 hover:text-slate-900 transition-all no-underline [&.active]:text-orange-600 [&.active]:border-b-2 [&.active]:border-orange-600 pb-1"
                 >
                   Market

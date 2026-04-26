@@ -3,7 +3,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export const Route = createFileRoute("/market")({
+export const Route = createFileRoute("/market" as any)({
   component: MarketPage,
 });
 

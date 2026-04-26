@@ -23,6 +23,7 @@ const hashHistory = createHashHistory();
 const router = createRouter({
   routeTree,
   history: hashHistory,
+  basepath: "/hw6-ajmoats/", // Match the base path in vite.config.ts
   context: { 
     api,
   },

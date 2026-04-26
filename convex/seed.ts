@@ -1,46 +1,70 @@
 import { mutation } from "./_generated/server";
+import { auth } from "./auth";
 
 export const seed = mutation({
   handler: async (ctx) => {
-    // Check if a real user is logged in (for dashboard runs)
-    const identity = await ctx.auth.getUserIdentity();
-    
-    /** * Spec 16: Ownership
-     * If running from terminal, 'identity' is null. We use a placeholder 
-     * string so the database doesn't crash on missing required fields.
-     */
-    const ownerId = identity?.subject ?? "terminal-seed-user";
+    // 1. Get the real User ID (Spec 16)
+    // Using the auth helper ensures the ID matches the v.id("users") type
+    let userId = await auth.getUserId(ctx);
 
-    // 1. Seed Assets (Spec 7 - Table 2)
+    // fallback for terminal seeding: find the first user in the DB
+    if (!userId) {
+      const firstUser = await ctx.db.query("users").first();
+      if (firstUser) {
+        userId = firstUser._id;
+      } else {
+        throw new Error("No users found. Log into the app once to create a user before seeding.");
+      }
+    }
+
+    // 2. Clear existing data (Optional, keeps dev environment clean)
+    // This helps avoid duplicate "West Texas Wind Farm A" entries
+    const existingAssets = await ctx.db.query("assets").collect();
+    for (const asset of existingAssets) { await ctx.db.delete(asset._id); }
+
+    // 3. Seed Assets (Spec 7)
     const assetId = await ctx.db.insert("assets", {
       name: "West Texas Wind Farm A",
       location: "ERCOT-West",
-      capacity: 150, // 150 MW
+      capacity: 150,
       type: "wind",
-      ownerId: ownerId as any, 
+      ownerId: userId,
     });
 
-    console.log("Seeded Asset ID:", assetId);
+    const solarId = await ctx.db.insert("assets", {
+      name: "Permian Basin Solar Hub",
+      location: "ERCOT-North",
+      capacity: 250,
+      type: "solar",
+      ownerId: userId,
+    });
 
-    // 2. Seed Events (Spec 7 - Table 3 & Spec 8 - One-to-Many)
-    // This creates a 'Critical' outage linked to the farm above.
+    // 4. Seed Events (Spec 8 - One-to-Many)
+    // Linking events to our new assets
     await ctx.db.insert("events", {
       assetId,
       type: "outage",
       severity: 3, 
-      durationHours: 4,
-      timestamp: Date.now() - 3600000, // 1 hour ago
+      durationHours: 12,
+      timestamp: Date.now() - 86400000, // 1 day ago
     });
 
-    // 3. Seed Market Data (Spec 22 - External Data Simulation)
-    // This provides the $/MWh price for your Revenue Impact logic.
+    await ctx.db.insert("events", {
+      assetId: solarId,
+      type: "curtailment",
+      severity: 1, 
+      durationHours: 2,
+      timestamp: Date.now(),
+    });
+
+    // 5. Seed Market Data (Spec 22)
     await ctx.db.insert("marketData", {
       timestamp: Date.now(),
-      price: 128.50, // High price spike simulated from EIA patterns
-      wind_pct: 14.2,
-      solar_pct: 38.5,
+      price: 45.20, // $/MWh
+      wind_pct: 22.5,
+      solar_pct: 15.0,
     });
 
-    console.log("Database seeded successfully!");
+    console.log("GridSight Pro: Database seeded successfully for user", userId);
   },
 });

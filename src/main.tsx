@@ -19,13 +19,13 @@ const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 const hashHistory = createHashHistory();
 
 // 3. Configure the Router
+// main.tsx snippet
 const router = createRouter({
   routeTree,
   history: hashHistory,
-  // When using Hash History, the basepath should usually be "/"
-  // because the sub-path /hw6-ajmoats/ is handled by the browser/Vite
-  basepath: "", // short again, otherwise doubles url-try empty
-  context: { api },
+  context: { 
+    api,
+  },
 });
  
 // 4. Register the router for type safety

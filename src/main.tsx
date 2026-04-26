@@ -11,6 +11,7 @@ import { api } from "../convex/_generated/api";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
 
+
 // 1. Initialize the Convex Client
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 

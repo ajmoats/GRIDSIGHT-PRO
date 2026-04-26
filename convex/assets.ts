@@ -3,7 +3,7 @@ import { v } from "convex/values";
 import { auth } from "./auth";
 import { paginationOptsValidator } from "convex/server";
 
-// Spec 9: CRUD (Create)
+// Spec 9: CRUD - Create Asset
 export const createAsset = mutation({
   args: {
     name: v.string(),
@@ -17,36 +17,18 @@ export const createAsset = mutation({
 
     return await ctx.db.insert("assets", {
       ...args,
-      ownerId: userId, // Correctly linking to the User ID (Spec 16)
+      ownerId: userId, // Spec 16: Recording ownership
     });
   },
 });
 
-// Used for the high-level summary on the Index page
-export const listMyAssets = query({
-  handler: async (ctx) => {
-    const userId = await auth.getUserId(ctx);
-    if (!userId) return [];
-
-    return await ctx.db
-      .query("assets")
-      .withIndex("by_owner", (q) => q.eq("ownerId", userId))
-      .collect();
-  },
-});
-
-/**
- * Spec 11: Backend Pagination
- * This allows the frontend to load assets in chunks (e.g., 5 at a time).
- */
+// Spec 11: Backend Pagination
+// This satisfies the requirement to have at least one paginated list.
 export const listPaginated = query({
   args: { paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
-    if (!userId) {
-       // Return empty pagination result if not logged in
-       return { page: [], isDone: true, continueCursor: "" };
-    }
+    if (!userId) return { page: [], isDone: true, continueCursor: "" };
 
     return await ctx.db
       .query("assets")
@@ -56,10 +38,7 @@ export const listPaginated = query({
   },
 });
 
-/**
- * Used for the Asset Detail page (assets.$assetId.tsx)
- * Fetches a single asset and verifies the user owns it (Spec 14/16).
- */
+// Query for the Asset Detail Page (Spec 14: Auth check)
 export const get = query({
   args: { id: v.id("assets") },
   handler: async (ctx, args) => {
@@ -67,9 +46,20 @@ export const get = query({
     const asset = await ctx.db.get(args.id);
 
     if (!asset || asset.ownerId !== userId) {
-      return null; // Authorization check
+      return null; // Authorization enforcement
     }
-
     return asset;
+  },
+});
+
+// Simple list for the home dashboard summary
+export const listMyAssets = query({
+  handler: async (ctx) => {
+    const userId = await auth.getUserId(ctx);
+    if (!userId) return [];
+    return await ctx.db
+      .query("assets")
+      .withIndex("by_owner", (q) => q.eq("ownerId", userId))
+      .collect();
   },
 });

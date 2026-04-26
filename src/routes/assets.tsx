@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { usePaginatedQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-export const Route = createFileRoute("/assets")({
+export const Route = createFileRoute("/assets" as any)({
   component: AssetsPage,
 });
 
@@ -27,9 +27,11 @@ function AssetsPage() {
         {results.map((asset) => (
           <Link
             key={asset._id}
-            to="/assets/$assetId"
-            params={{ assetId: asset._id }}
-            className="group flex items-center justify-between p-6 border rounded-2xl bg-white hover:border-blue-500 hover:shadow-lg transition-all no-underline text-current"
+            {...({
+              to: "/assets/$assetId",
+              params: { assetId: asset._id },
+              className: "group flex items-center justify-between p-6 border rounded-2xl bg-white hover:border-blue-500 hover:shadow-lg transition-all no-underline text-current"
+            } as any)}
           >
             <div className="flex gap-4 items-center">
               <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${asset.type === 'wind' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}`}>

@@ -3,7 +3,7 @@ import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { LoginButton } from "../components/ui/LoginButton";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/" as any)({
   component: Index,
 });
 
@@ -51,7 +51,7 @@ function Index() {
                 <p className="text-slate-500 font-medium">Active Nodes Monitored</p>
               </div>
               <Link 
-                to="/assets" 
+                to={"/assets" as any}
                 className="inline-flex items-center text-blue-600 font-bold no-underline hover:gap-2 transition-all"
               >
                 GO TO ASSETS <span className="ml-1">→</span>
@@ -66,7 +66,7 @@ function Index() {
                 <p className="text-slate-500 font-medium">Real-Time Fuel Mix & Pricing</p>
               </div>
               <Link 
-                to="/market" 
+                to={"/market" as any}
                 className="inline-flex items-center text-orange-600 font-bold no-underline hover:gap-2 transition-all"
               >
                 VIEW MARKET <span className="ml-1">→</span>

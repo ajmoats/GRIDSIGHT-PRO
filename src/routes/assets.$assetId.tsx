@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-export const Route = createFileRoute("/assets/$assetId")({
+export const Route = createFileRoute("/assets/$assetId" as any)({
   component: AssetDetail,
 });
 
@@ -103,7 +103,7 @@ function AssetDetail() {
 
       <footer className="pt-10">
         <p className="text-[10px] text-center text-slate-300 font-black uppercase tracking-[0.3em]">
-            System Node: {assetId.slice(0, 12)}... [SECURE ENCRYPTED FEED]
+            System Node: {(assetId as string).slice(0, 12)}... [SECURE ENCRYPTED FEED]
         </p>
       </footer>
     </div>

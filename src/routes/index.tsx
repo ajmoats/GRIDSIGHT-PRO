@@ -11,44 +11,70 @@ function Index() {
   const { isAuthenticated, isLoading } = useConvexAuth();
   const assets = useQuery(api.assets.listMyAssets);
 
-  if (isLoading) return <div className="p-8 text-center">Loading Grid...</div>;
-
   return (
-    <div className="space-y-8">
-      <section className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl">
-        <h1 className="text-4xl font-black tracking-tight mb-2">GRIDSIGHT PRO</h1>
-        <p className="text-slate-400 max-w-md">
-          Real-time energy asset performance, market pricing, and operational risk modeling.
-        </p>
-      </section>
+    <div className="space-y-8 animate-in fade-in duration-500">
+      {/* Hero Header */}
+      <header className="bg-slate-900 text-white p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+        <div className="relative z-10">
+          <h1 className="text-4xl font-black tracking-tighter mb-2 italic">GRIDSIGHT PRO</h1>
+          <p className="text-slate-400 max-w-md font-medium">
+            Next-gen energy asset monitoring and real-time market risk analysis.
+          </p>
+        </div>
+        <div className="absolute top-0 right-0 p-8 opacity-10">
+           <div className="h-32 w-32 rounded-full border-8 border-white" />
+        </div>
+      </header>
 
-      {!isAuthenticated ? (
-        <div className="border-2 border-dashed border-slate-200 rounded-2xl p-12 text-center">
-          <h2 className="text-xl font-bold mb-4">Secure Access Required</h2>
-          <LoginButton />
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 border rounded-xl hover:border-blue-500 transition group">
-            <h3 className="font-bold text-lg mb-2">Your Assets</h3>
-            <p className="text-sm text-slate-500 mb-4">
-              {assets?.length ?? 0} active infrastructure nodes monitored.
-            </p>
-            <Link to="/assets" className="text-blue-600 font-bold text-sm uppercase tracking-wider">
-              View Dashboard →
-            </Link>
+      <main>
+        {isLoading ? (
+          <div className="flex justify-center p-20">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-900 border-t-transparent" />
           </div>
-          <div className="p-6 border rounded-xl hover:border-blue-500 transition">
-            <h3 className="font-bold text-lg mb-2">Market Data</h3>
-            <p className="text-sm text-slate-500 mb-4">
-              Live fuel mix and nodal pricing from EIA.
+        ) : !isAuthenticated ? (
+          <div className="text-center p-16 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 text-balance">
+              Secure Telemetry Connection Required
+            </h2>
+            <p className="text-slate-500 mb-8 max-w-sm mx-auto">
+              Please sign in with your engineering credentials to access the grid dashboard.
             </p>
-            <Link to="/market" className="text-blue-600 font-bold text-sm uppercase tracking-wider">
-              Analyze Trends →
-            </Link>
+            <LoginButton />
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Asset Control Card */}
+            <div className="group p-8 border-2 border-slate-100 rounded-3xl bg-white hover:border-blue-500 hover:shadow-xl transition-all">
+              <h2 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4">Infrastructure</h2>
+              <div className="mb-6">
+                <span className="text-5xl font-black text-slate-900">{assets?.length ?? 0}</span>
+                <p className="text-slate-500 font-medium">Active Nodes Monitored</p>
+              </div>
+              <Link 
+                to="/assets" 
+                className="inline-flex items-center text-blue-600 font-bold no-underline hover:gap-2 transition-all"
+              >
+                GO TO ASSETS <span className="ml-1">→</span>
+              </Link>
+            </div>
+
+            {/* Market Risk Card */}
+            <div className="group p-8 border-2 border-slate-100 rounded-3xl bg-white hover:border-orange-500 hover:shadow-xl transition-all">
+              <h2 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4">Market Insight</h2>
+              <div className="mb-6">
+                <span className="text-5xl font-black text-slate-900">EIA</span>
+                <p className="text-slate-500 font-medium">Real-Time Fuel Mix & Pricing</p>
+              </div>
+              <Link 
+                to="/market" 
+                className="inline-flex items-center text-orange-600 font-bold no-underline hover:gap-2 transition-all"
+              >
+                VIEW MARKET <span className="ml-1">→</span>
+              </Link>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

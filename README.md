@@ -1,32 +1,44 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/wDSJIHC9)
-# Hello App
+# GRIDSIGHT-PRO ⚡
 
-Minimal hello-world scaffold for the final homework in Full-Stack JavaScript.
+GRIDSIGHT-PRO is a full-stack Business Intelligence (BI) platform designed to monitor renewable energy asset health, simulate industrial SCADA telemetry, and quantify financial risk against real-time wholesale electricity market volatility. 
 
-The repo keeps the course stack in place:
+Built using a modern reactive architecture, the system maps high-frequency physical asset metrics directly to regional grid price data streams to calculate live operational revenue impacts.
 
-- React 19 + Vite
-- TanStack Router
-- Convex
-- Tailwind CSS + a small set of shadcn-style UI primitives
+---
 
-The app is intentionally stripped down to a minimal hello-world page with:
+## 🚀 Core Architecture & Features
 
-- a public Convex query
-- a minimal route/layout structure
-- Vite, TanStack Router, and Convex already wired together
-- a GitHub Actions workflow for automated GitHub Pages deployment
+### 1. Real-Time SCADA Telemetry Simulation
+* Spins up containerized background loops simulating industrial SCADA networks.
+* Streams high-frequency edge metrics (including active power output $MW$, rotor velocity, and core bearing temperatures).
+* Automates threshold validation to log anomaly flags and active downtime incidents immediately to a real-time event pipeline.
 
-Authentication, schema design, data modeling, CRUD operations, authorization, pagination, seeding, and the actual application itself are intentionally left for you to implement.
+### 2. Live Grid Integration (EIA API)
+* Built-in ingestion handlers linking directly to the **U.S. Energy Information Administration (EIA) Open Data API**.
+* Periodically streams real-time Regional Transmission Organization (RTO) metrics, tracking **Grid Fuel-Mix data** (Wind, Solar, Gas, Coal generation breakdowns) and **Wholesale Node Spot Pricing ($\$/MWh$)** across regions like PJM and ERCOT.
 
-## Run locally
+### 3. Revenue Impact Engine
+* Implements a deterministic economic evaluation model to cross-reference asset unavailability with real-time grid economics.
+* Quantifies immediate financial losses by mapping historical downtime events against concurrent regional spot market pricing using the engine formula:
+  $$\text{Financial Loss} = \text{Capacity (MW)} \times \text{Downtime (Hours)} \times \text{Efficiency Factor} \times \text{Spot Price (\$/MWh)}$$
 
-1. Install dependencies with `pnpm install`.
-2. The first time you run the project, run `npx convex dev` and complete the Convex project setup.
-3. After that, start everything together with:
+### 4. Role-Based Access Control & Authorization (RBAC)
+* Features a secure, session-persistent authentication and authorization state machine.
+* Implements context-aware server filters ensuring operators and administrative viewers are strictly isolated to monitoring assets and market boundaries matching their explicitly assigned RTO region.
 
+---
+
+## 🛠️ The Tech Stack
+
+* **Frontend:** React 19, Vite, TanStack Router (Type-safe routing), Tailwind CSS, Shadcn UI
+* **Backend & DB:** Convex (Reactive Time-Series Database, Actions, and Graph Queries)
+* **Package Manager:** pnpm
+* **CI/CD:** Automated deployment workflows via GitHub Actions
+
+---
+
+## 💻 Getting Started
+
+### 1. Clone & Install Dependencies
 ```bash
-pnpm run dev
-```
-
-4. Open the app at `http://localhost:5173/`.
+pnpm install

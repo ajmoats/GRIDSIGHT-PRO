@@ -59,6 +59,7 @@ export const seed = mutation({
 
     // 5. Seed Market Data (Spec 22)
     await ctx.db.insert("marketData", {
+      region: "ERCOT", // Match the region used in fetchEIAData action
       timestamp: Date.now(),
       price: 45.20, // $/MWh
       wind_pct: 22.5,

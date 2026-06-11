@@ -23,6 +23,7 @@ export const getLatest = query({
  */
 export const saveMarketSnapshot = mutation({
   args: {
+    region: v.string(),
     price: v.number(),
     wind_pct: v.number(),
     solar_pct: v.number(),
@@ -48,6 +49,7 @@ export const fetchEIAData = action({
     const solar = 10 + Math.random() * 25;
 
     await ctx.runMutation(api.market.saveMarketSnapshot, {
+      region: "ERCOT", // Pass target market region as needed
       price: parseFloat(simulatedPrice.toFixed(2)),
       wind_pct: parseFloat(wind.toFixed(1)),
       solar_pct: parseFloat(solar.toFixed(1)),

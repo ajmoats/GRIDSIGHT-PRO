@@ -36,10 +36,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build with Vite
-        run: npx convex deploy --cmd 'pnpm run build'
+      - name: Deploy Convex Backend & Generate Types 🚀
+        run: npx convex deploy
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+
+      - name: Codegen Convex Frontend Client Types 🧩
+        run: npx convex dev --codegen-package-json --once
+
+      - name: Build with Vite
+        run: pnpm run build
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
